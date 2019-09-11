@@ -3,6 +3,7 @@
 # Make a 8-bit greyscale 1081×1081 pixel image (PNG) to be used as a heightmap in City Skylines
 
 import random
+import colorsys # Used to find the area of the previous obj generation
 from PIL import Image, ImageDraw
 
 def drawFirst(draw):

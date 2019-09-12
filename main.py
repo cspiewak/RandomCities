@@ -3,21 +3,21 @@
 # Make a 8-bit greyscale 1081×1081 pixel image (PNG) to be used as a heightmap in City Skylines
 
 import random
+import numpy as np
 from PIL import Image, ImageDraw
 
-def is_grey(img, testX, testY, val):
-    rgbVal = img.getpixel((testX, testY))
+def is_grey(val):
     # In each case test the color of pixel to see if it is a suitable starting area
+    imgTest = Image.open('generated_map.png', 'r')
+    width, height = imgTest.size
+    pixel_values = list(imgTest.getdata())
+    pixel_values = np.array(pixel_values).reshape((width, height)) # need to add a way of removing the unwanted values for the following test
     if val == 0: # Test for the second drawing of obj
-        if rgbVal == (16, 16, 16):
-            return 1 # go ahead and draw
-        else:
-            return 0
+        # (16, 16, 16):
+
     else: # Test for the third drawing of obj
-        if rgbVal == (32, 32, 32):
-            return 1 # go ahead and draw
-        else:
-            return 0
+        # (32, 32, 32):
+
 
 def drawFirst(draw):
     # Randomly generate the sizes

@@ -5,11 +5,19 @@
 import random
 from PIL import Image, ImageDraw
 
-def is_grey(img, testX, testY, i):
+def is_grey(img, testX, testY, val):
     rgbVal = img.getpixel((testX, testY))
-    # make a case switch for all three drawings indicated by the i value
-    # use something better than i
-    # in each case test the color of pixel to see if it is a suitable starting area
+    # In each case test the color of pixel to see if it is a suitable starting area
+    if val == 0: # Test for the second drawing of obj
+        if rgbVal == (16, 16, 16):
+            return 1 # go ahead and draw
+        else:
+            return 0
+    else: # Test for the third drawing of obj
+        if rgbVal == (32, 32, 32):
+            return 1 # go ahead and draw
+        else:
+            return 0
 
 def drawFirst(draw):
     # Randomly generate the sizes
@@ -25,16 +33,46 @@ def drawFirst(draw):
         draw.ellipse((startCord, endCord), fill='rgb(16, 16, 16)')
         i += 1
 
-def drawSecond(draw):
+def drawSecond(img, draw):
     # rgb(32, 32, 32)
+    n = random.randint(6, 12)
+    i = 1
+    while i <= n:
+        testingVal = 0
+        while testingVal == 0:
+            x0 = random.randint(120, 580) # Starting point in the X direction defining the bounding box
+            y0 = random.randint(120, 580) # Starting point in the Y direction defining the bounding box
+            testingVAL = is_grey(img, x0, y0, 0)
+        startCord = (x0, y0)
+        x1 = x0 + random.randint(295, 355) # X length
+        y1 = y0 + random.randint(295, 355) # Y length
+        endCord = (x1, y1)
+        draw.ellipse((startCord, endCord), fill='rgb(32, 32, 32)')
+        i += 1
 
-def drawThird(draw):
+def drawThird(img, draw):
     # rgb(64, 64, 64)
+    n = random.randint(6, 12)
+    i = 1
+    while i <= n:
+        testingVal = 0
+        while testingVal == 0:
+            x0 = random.randint(140, 560) # Starting point in the X direction defining the bounding box
+            y0 = random.randint(140, 560) # Starting point in the Y direction defining the bounding box
+            testingVAL = is_grey(img, x0, y0, 1)
+        startCord = (x0, y0)
+        x1 = x0 + random.randint(315, 335) # X length
+        y1 = y0 + random.randint(315, 335) # Y length
+        endCord = (x1, y1)
+        draw.ellipse((startCord, endCord), fill='rgb(32, 32, 32)')
+        i += 1
 
 def main():
     img = Image.new('RGB', (1081, 1081)) # About 16 pixels per km of map
     draw = ImageDraw.Draw(img)
     drawFirst(draw)
+    drawSecond(img, draw)
+    drawThird(img, draw)
     img.save('generated_map.png') # Every itteration overwrites the last map
 
 if __name__ == "__main__":

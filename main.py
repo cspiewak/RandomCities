@@ -61,7 +61,7 @@ def main():
     simg1.save('generated_map_post.png')
     # Smooth the topology
     postImg2 = Image.open('generated_map_post.png')
-    simg2 = postImg2.filter(ImageFilter.BoxBlur(radius = 50))
+    simg2 = postImg2.filter(ImageFilter.BoxBlur(radius = 25))
     simg2.save('generated_map_post.png')
 
 if __name__ == "__main__":
